@@ -21,9 +21,9 @@
 
     <div class="row read-list">
         <div class="col-md-6">
-            <list name="Unread" v-bind:items="unreadList" v-on:remove-book="removeBook"></list>
-            <list name="Enjoyed" v-bind:items="enjoyedList" v-on:remove-book="removeBook"></list>
-            <list name="Disliked" v-bind:items="dislikedList" v-on:remove-book="removeBook"></list>
+            <list name="Unread" v-bind:books="unreadList" v-on:remove-book="removeBook"></list>
+            <list name="Enjoyed" v-bind:books="enjoyedList" v-on:remove-book="removeBook"></list>
+            <list name="Disliked" v-bind:books="dislikedList" v-on:remove-book="removeBook"></list>
         </div>
     </div>
 
@@ -48,7 +48,7 @@
                         </div>
                         <div class="form-control">
                             <label for="category">Read or Unread</label>
-                            <select v-model="newItem.category" id="category" class="form-control">
+                            <select v-model="newBook.category" id="category" class="form-control">
                                 <option value="read">Read</option>
                                 <option value="unread">Unread</option>
                             </select>

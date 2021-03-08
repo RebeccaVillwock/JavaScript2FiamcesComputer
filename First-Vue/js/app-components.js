@@ -6,7 +6,7 @@ Vue.component('List', {
             type: Array,
             required: true,
         },
-        title: {
+        name: {
             type: String,
             required: true,
         },
@@ -23,7 +23,7 @@ Vue.component('List', {
 <div class="read-list">
     <h3>{{name}}</h3>
     <ul class="list-group list-group-flush">
-        <ListItem v-for="(book, b) in books" :key="book.title" :item="book" class="list-group-item" @remove-book="$emit('remove-book', book)"></ListItem>  
+        <ListItem v-for="(book, b) in books" :key="book.title" :book="book" class="list-group-item" @remove-book="$emit('remove-book', book)"></ListItem>  
     </ul>
 </div>
 `,
