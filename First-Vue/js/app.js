@@ -35,8 +35,8 @@ const app = new Vue({
             $('#addBookModal').model('hide');
         },
 
-        removeIt: function(book){
-            this.booksList.splice(this.shoppingList.indexOf(book), 1);
+        removeBook: function(item){
+            this.booksList.splice(this.booksList.indexOf(item), 1);
         }
 
     },
@@ -44,19 +44,19 @@ const app = new Vue({
     //computed: values that are updated and cached if dependencies change
     computed:{
         unreadList: function(){
-            return this.booksList.filter(function(book){
-               return book.category === 'unread';
+            return this.booksList.filter(function(item){
+               return item.category === 'unread';
             });
         },
 
         enjoyedList: function(){
-            return this.booksList.filter(function(book){
-               return book.category === 'read' && book.enjoyed;
+            return this.booksList.filter(function(item){
+               return item.category === 'read' && item.enjoyed;
             });
         },
         dislikedList: function(){
-            return this.booksList.filter(function(book){
-                return book.category === 'read' && !book.enjoyed;
+            return this.booksList.filter(function(item){
+                return item.category === 'read' && !item.enjoyed;
             });
         }
 

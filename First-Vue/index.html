@@ -21,9 +21,9 @@
 
     <div class="row read-list">
         <div class="col-md-6">
-            <list name="Unread" v-bind:items="unreadList" v-on:remove-book="removeIt"></list>
-            <list name="Enjoyed" v-bind:items="enjoyedList" v-on:remove-book="removeIt"></list>
-            <list name="Disliked" v-bind:items="dislikedList" v-on:remove-book="removeIt"></list>
+            <list name="Unread" v-bind:items="unreadList" v-on:remove-book="removeBook"></list>
+            <list name="Enjoyed" v-bind:items="enjoyedList" v-on:remove-book="removeBook"></list>
+            <list name="Disliked" v-bind:items="dislikedList" v-on:remove-book="removeBook"></list>
         </div>
     </div>
 
