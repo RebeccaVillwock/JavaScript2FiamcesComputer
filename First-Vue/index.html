@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>First Vue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- fonts / icons / css -->
+    <link href="https://fonts.googleapis.com/css?family=Kreon:700|Hind" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/app.min.css">
+</head>
+<body>
+<nav class="navbar fixed-top">
+    <span class="navbar-brand">Books To Read</span>
+    <button type="button" class="btn btn-outline-primary" data-toggle="model" data-target="" title="Add Book">
+        <i class="fas fa-book"></i>Read
+    </button>
+</nav>
+
+<div id="app" class="container-fluid">
+
+    <div class="row read-list">
+        <div class="col-md-6">
+            <list name="Unread" v-bind:items="unreadList" v-on:remove-book="removeIt"></list>
+            <list name="Enjoyed" v-bind:items="enjoyedList" v-on:remove-book="removeIt"></list>
+            <list name="Disliked" v-bind:items="dislikedList" v-on:remove-book="removeIt"></list>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addBookModel" tabindex="-1" role="dialog" aria-labelledby="modalTitle" area-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form>
+                <div class="model-content">
+                    <div class="model-header">
+                        <h5 class="modal-title" id="modalTitle">Add Book</h5>
+                        <button type="button" class="close" data-dismiss="modal" area-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input v-model="newBook.title" id="title" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="author">Author</label>
+                            <input v-model="newBook.author" id="author" type="text" class="form-control">
+                        </div>
+                        <div class="form-control">
+                            <label for="category">Read or Unread</label>
+                            <select v-model="newItem.category" id="category" class="form-control">
+                                <option value="read">Read</option>
+                                <option value="unread">Unread</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
+                        <button type="submit" class="btn btn-primary" v-on:click.prevent="addBook">Add Book</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+<!-- Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        // set focus to name field when modal is opened
+        $('#addItemModal').on('shown.bs.modal', function () {
+            $('#name').focus();
+        });
+    });
+</script>
+
+<!-- Vue Application -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="js/app-components.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+/* *********************** */
+/*        App Styles       */
+/* *********************** */
+
+.console {
+    height: 75vh;
+    overflow-y: scroll;
+}
+
+.console-type {
+    width: auto;
+    flex: none;
+    padding-right: 5px;
+}
+
+.console-type .badge {
+    padding: .5rem;
+    width: 55px;
+    text-transform: capitalize;
+}
+
+.console-message {
+    display: flex;
+    align-items: center;
+}
+
+/* adapted from: https://css-tricks.com/snippets/css/typewriter-effect/ */
+.type-it {
+    display: inline-block;
+    overflow: hidden; /* hides the content until the animation */
+    border-right: .15em solid transparent; /* the typewriter cursor */
+    white-space: nowrap;
+    letter-spacing: .1em;
+    animation:
+            typing 3s steps(19, end),
+            blinking-caret 1s step-end infinite;
+}
+
+/* typing effect */
+@keyframes typing {
+    from {
+        width: 0
+    }
+    to {
+        width: 100%
+    }
+}
+
+/* typewriter cursor effect */
+@keyframes blinking-caret {
+    from, to {
+        border-color: white
+    }
+    50% {
+        border-color: transparent;
+    }
+}
+
+/* *********************** */
+/*   Bootstrap Overrides  */
+/* *********************** */
+pre {
+    margin: 0;
+    color: inherit;
+}
+
+.card-header, .navbar-brand {
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.navbar-brand {
+    font-size: 2em;
+    padding-bottom: 0;
+}
+
+.badge {
+    letter-spacing: .05em;
+}
+
