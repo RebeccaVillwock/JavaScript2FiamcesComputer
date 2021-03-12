@@ -20,52 +20,6 @@
 
 
 
-    <div class="row read-list">
-        <div class="col-md-6">
-            <list name="Unread" v-bind:books="unreadList" v-on:remove-book="removeBook"></list>
-            <list name="Enjoyed" v-bind:books="enjoyedList" v-on:remove-book="removeBook"></list>
-            <list name="Disliked" v-bind:books="dislikedList" v-on:remove-book="removeBook"></list>
-        </div>
-    </div>
-
-    <div class="modal fade" id="addBookModel" tabindex="-1" role="dialog" aria-labelledby="modalTitle" area-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form>
-                <div class="model-content">
-                    <div class="model-header">
-                        <h5 class="modal-title" id="modalTitle">Add Book</h5>
-                        <button type="button" class="close" data-dismiss="modal" area-label="Close">
-                            <span aria-hidden="true"></span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <input v-model="newBook.title" id="title" type="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="author">Author</label>
-                            <input v-model="newBook.author" id="author" type="text" class="form-control">
-                        </div>
-                        <div class="form-control">
-                            <label for="category">Read or Unread</label>
-                            <select v-model="newBook.category" id="category" class="form-control">
-                                <option value="read">Read</option>
-                                <option value="unread">Unread</option>
-                            </select>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
-                        <button type="submit" class="btn btn-primary" v-on:click.prevent="addBook">Add Book</button>
-                    </div>
-                </div>
-            </form>
-
-        </div>
-
-    </div>
 
 
 </div>
