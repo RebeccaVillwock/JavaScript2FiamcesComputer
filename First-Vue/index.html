@@ -10,19 +10,32 @@
     <link rel="stylesheet" href="css/app.min.css">
 </head>
 <body>
-<div id="app" class="container-fluid">
+
     <nav class="navbar badge-secondary">
-        <span class="navbar-brand">Books To Read</span>
-        <button type="button" class="btn btn-outline-primary" data-toggle="model" data-target="" title="Add Book">
-            <i class="fas fa-book"></i> Read
-        </button>
+        <h1 class="navbar-brand">Books</h1>
+        <span>
+            <button type="button" class="btn btn-primary text-dark">
+                <i class="fas fa-book-open"></i> Read
+            </button>
+            <button type="button" class="btn btn-primary text-dark">
+                <i class="fas fa-book"></i> Unread
+            </button>
+        </span>
+
+        <span>
+            <button type="button" class="btn btn-primary text-dark">
+                <i class="fas fa-seedling"></i> Owned
+            </button>
+            <button type="button" class="btn btn-primary text-dark">
+                <i class="fas fa-ghost"></i> Unowned
+            </button>
+        </span>
     </nav>
 
 
-
-
-
-</div>
+    <div id="app" class="container-fluid mt-4">
+        <book-shelf></book-shelf>
+    </div>
 
 
 
@@ -45,6 +58,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 <script src="js/app-components.js"></script>
 <script src="js/app.js"></script>
+<script src="js/app-models.js"></script>
 
 </body>
 </html>

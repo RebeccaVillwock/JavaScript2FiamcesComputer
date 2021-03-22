@@ -1,18 +1,17 @@
 //will give us a <list>
-Vue.component('List', {
+const BookShelfComponent = Vue.component('BookShelf', {
 
-    props: {
-        books: {
-            type: Array,
-            required: true,
-        },
-        name: {
-            type: String,
-            required: true,
-        },
-        author: {
-            type: String,
+    data(){
+        return {
+            bookShelf: [
+                new Book('The Way Of Kings', 'Brandon Sanderson'),
+                new Book('The Mists Of Avolone','Marion Zimmer Bradley'),
+                new Book('Words of Radiance', 'Brandon Sanderson'),
+            ]
         }
+    },
+    props: {
+
     },
 
     methods: {},
@@ -20,43 +19,25 @@ Vue.component('List', {
     computed: {},
 
     template: `
-<div class="read-list">
-    <h3>{{name}}</h3>
-    <ul class="list-group list-group-flush">
-        <ListItem v-for="(book, b) in books" :key="book.title" :book="book" class="list-group-item" @remove-book="$emit('remove-book', book)"></ListItem>  
-    </ul>
-</div>
+    <div class="card-columns">
+        <div class="card">
+            <div class="card-header">
+                <!-- for designating whether or not the book was enjoyed -->
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+            </div>
+            
+            <div class="card-body">
+                <h2></h2>
+            </div>
+            
+            <div class="card-footer">
+            
+            </div>
+        </div>
+    </div>
+
 `,
-
-
-});
-
-Vue.component('ListItem',{
-    data: function(){
-        return{
-            uid: Math.floor(Math.random() * 10e16),
-        }
-    },
-    props: {
-        book: {
-            type: Object,
-            required: true,
-        }
-    },
-    methods: {
-
-    },
-    template: `
-    <li class="list-group-item">
-        <div class="custom-control custom-checkbox">
-            <input v-model="book.read" type="checkbox" :id="uid" class="custom-control-input">
-            <label :for="uid" class="custom-control-label">{{book.title}}</label>
-        </div>
-        <div class="d-flex justify-content-between">
-            <small>{{book.author}}</small>
-        </div>
-    </li>
-    `,
 
 
 });

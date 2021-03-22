@@ -4,17 +4,7 @@ const app = new Vue({
     //data: all the data for the app
     data: function(){
         return{
-            newBook: {
-                title: '',
-                author: '',
-                category: '',
-                enjoyed: false,
-            },
-            booksList: [
-                {title: 'The Way of Kinds', author: 'Brandon Sanderson', category: 'read', enjoyed: 'true'},
-                {title: 'Romance of The Three Kingdoms', author: 'Lua Guanzhong', category:'unread', enjoyed: 'false'},
-                {title: 'The Mists Of Avalon', author: 'Marion Zimmer Bradley', category: 'read', enjoyed: 'true'}
-            ],
+
 
         }
 
@@ -22,51 +12,20 @@ const app = new Vue({
 
     //methods: usually "events" triggered by v-on:
     methods:{
-        addBook: function(e){
-            this.booksList.push(this.newBook);
 
-            this.newBook = {
-                title: '',
-                author: '',
-                category: 'unread',
-                enjoyed: false,
-            };
 
-            $('#addBookModal').model('hide');
-        },
-
-        removeBook: function(item){
-            this.booksList.splice(this.booksList.indexOf(item), 1);
-        }
 
     },
 
     //computed: values that are updated and cached if dependencies change
     computed:{
-        unreadList: function(){
-            return this.booksList.filter(function(item){
-               return item.category === 'unread';
-            });
-        },
 
-        enjoyedList: function(){
-            return this.booksList.filter(function(item){
-               return item.category === 'read' && item.enjoyed;
-            });
-        },
-        dislikedList: function(){
-            return this.booksList.filter(function(item){
-                return item.category === 'read' && !item.enjoyed;
-            });
-        }
 
     },
 
     //mounted: called after the instance has been mounted,
     mounted: function(){
-        if(localStorage.getItem('booksList')){
-           this.booksList = JSON.parse(localStorage.getItem('booksList'));
-        }
+
     },
 
     //watch: calls the function if the value changes
