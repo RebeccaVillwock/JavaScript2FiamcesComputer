@@ -31,7 +31,7 @@ function OwnedMediaItem(media){
         this.status = STATUS.UNOWNED;
     }
 
-    media.IsOwned = function(){
+    media.isOwned = function(){
         return this.status === STATUS.OWNED;
     }
 
@@ -41,7 +41,8 @@ function OwnedMediaItem(media){
 function Book(title, author, enjoyed){
     this.title = title;
     this.author = author;
+    this.enjoyed = true;
 }
 
 
-
+//make collections instead of functions
