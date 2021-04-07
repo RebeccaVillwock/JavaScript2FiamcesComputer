@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEST IT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<button id="add">Add Tacos</button>
+
+<div id="list"></div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
+
+<!-- Vue Application -->
+<script src="js/app-models.js"></script>
+<script>
+    // add recipe
+    document.getElementById('add').onclick = function(e){
+        let recipe = new Recipe();
+        recipe.name = 'Tacos';
+        recipe.description = 'Very tasty.';
+        recipe.ingredients = ['Meat', 'Cheese', 'Other Stuff'];
+        recipe.directions = ['Mix ingredients.', 'Eat It.'];
+        recipe.rating = 3.5;
+
+        // add recipe
+        db.collection('recipes') //pick collection
+            .add(recipe)
+            .then((docRef) => {
+                console.log('Added!', docRef);
+            })
+            .catch((error) => {
+                console.log('Error!', error);
+            });
+    }
+
+    // display recipes
+    window.onload = function(){
+        db.collection('recipes') //our query (all recpies)
+            .onSnapshot((snapshot) => {
+                // this is called when any of our data matching our query changes
+                // this is also called when the page loads
+                let recipes = [];
+                document.getElementById('list').innerHTML = '';
+
+                snapshot.forEach((doc) => {
+                    recipes.push(doc.data());
+                    document.getElementById('list').innerHTML += '<h3>' + doc.data().name + '</h3>';
+                    document.getElementById('list').innerHTML += '<p>' + JSON.stringify((doc.data())) + '</p>';
+                })
+            })
+    }
+</script>
+
+
+
+</body>
+</html>
