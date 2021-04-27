@@ -23,9 +23,9 @@ const app = new Vue({
     router: router,
     // data: all the data for the app
     data: {
-        newPotluck: new Potluck(),
+/*        newPotluck: new Potluck(),
         potlucks: [], // placeholder until firebase data is loaded
-        addPotluckModal: false, // show/hide modal
+        addPotluckModal: false, // show/hide modal*/
         authUser: null,
     },
 
@@ -39,9 +39,32 @@ const app = new Vue({
 
     },
 
-    //mounted:  called after the instance has been created,
+    //called after the instance has been created,
     created: function() {
-        // TODO: onAuthStateChanged()
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in.
+               /* let displayName = user.displayName;
+                let email = user.email;
+                let emailVerified = user.emailVerified;
+                let photoURL = user.photoURL;
+                let isAnonymous = user.isAnonymous;
+                let uid = user.uid;
+                let providerData = user.providerData;*/
+
+                console.log('Signed in as: ', user);
+
+                // store the logged in user in our app
+                this.authUser = new User(user);
+
+            } else {
+                // User is signed out.
+                console.log('Not signed in.');
+
+                //remove the current user
+                this.authUser = null;
+            }
+        });
     },
 
     // watch: calls the function if the value changes

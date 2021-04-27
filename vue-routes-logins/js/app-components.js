@@ -385,17 +385,27 @@ Vue.component('navigation', {
         login(){
             let provider = new firebase.auth.GoogleAuthProvider();
 
-            // TODO: login with google
+            //login with google
+            firebase.auth()
+                //.signInWithEmailAndPassword(email, password)
+                .signInWithPopup(provider)
+                .catch(function(error) {
+                    // Handle Errors here.
+                    let errorCode = error.code;
+                    let errorMessage = error.message;
+
+                    //TODO Let user know
+                });
         },
 
         logout(){
-            // TODO: logout
+            firebase.auth().signOut();
         },
     },
 
     template: `
         <ul class="list-unstyled components">
-            <li><router-link to="/home">Home</router-link></li>
+            <li><router-link :to="{name: 'home'}">Home</router-link></li>
             <li><router-link to="/my-potlucks">My Potlucks</router-link></li>
             <li><router-link to="/create">Create</router-link></li>
             <li><router-link to="/potlucks">Potlucks</router-link></li>
