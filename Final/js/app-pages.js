@@ -1,9 +1,18 @@
 const HomePage = Vue.component('HomePage', {
     props:{
+        authUser: {required: true},
+    },
+    computed: {
+        loggedIn() {
+            return (this.authUser && this.authUser.uid)
+        }
+    },
+    methods: {
 
     },
     template: `
         <div class="home page">
+            <div v-if="loggedIn"></div>
             <div>
                 <p>Home Page</p>
             </div>
@@ -41,11 +50,41 @@ const LoginPage = Vue.component('LoginPage', {
    props: {
 
    },
+    method: {
+       login(){
+           firebase.auth.onAuthStateChanged((user) => {
+               console.log('Signed in as: ', user.email);
+
+               this.authUser = new User(user);
+           });
+
+
+       }
+    },
    template: `
         <div class="login page">
-            <div>
-                <p>Login Page</p>
+             <div class="row">
+                <div class="col-sm-1 col-md-4"></div>
+                <div class="col-sm-12 col-md-4">
+                    <form @submit.prevent="login">
+                        <div class="form-group">
+                            <label for="userEmail">Email: </label>
+                            <input type="email" id="userEmail" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="userPassword">Password: </label>
+                            <input type="password" id="userPassword" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+                <div class="col-sm-1 col-md-4"></div>
             </div>
+        <div class="row">
+            <div class="col-4">
+                <router-link to="/create-account">Create Account</router-link>
+            </div>
+        </div>  
         </div>
     `,
 });

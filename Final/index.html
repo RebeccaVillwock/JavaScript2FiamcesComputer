@@ -30,11 +30,11 @@
 <div id="app">
 
     <nav id="sidebar">
-        <navigation></navigation>
+        <navigation :auth-user="authUser"></navigation>
     </nav>
 
     <div id="content">
-        <router-view></router-view>
+        <router-view :auth-user="authUser"></router-view>
     </div>
 
 </div>

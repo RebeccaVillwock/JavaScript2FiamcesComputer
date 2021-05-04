@@ -19,6 +19,7 @@ var app = new Vue({
    data:{
 
        flowerList: [],
+       authUser : null,
 
    },
 
@@ -27,5 +28,18 @@ var app = new Vue({
    },
    methods:{
 
-   }
+   },
+    created: function(){
+       firebase.auth().onAuthStateChanged((user) => {
+          if(user){
+              console.log('Signed in as: ', user);
+
+              this.authUser = new User(user);
+          } else {
+              console.log('Not signed in');
+
+              this.authUser = null;
+          }
+       });
+    }
 });
