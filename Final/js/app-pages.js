@@ -172,6 +172,9 @@ const ListAllFlowersPage = Vue.component("ListAllFlowersPage", {
    props: {
 
    },
+    methods: {
+
+    },
     template: `
         <div class="list-all-flowers page">
             <h2>All Flowers</h2>

@@ -9,17 +9,23 @@ Vue.component('flower', {
 
     },
     methods: {
+       addFlower(){
+
+       },
+        removeFlower(){
+
+        }
 
     },
     template: `
         <div class="flower">
             
                 <div class="col-6">
-                    <h3 v-if="flower.name" class="name">{{flower.name}}</h3>
-                    <p v-if="flower.season" class="season">{{flower.season}}</p>
-                    <p v-if="flower.space" class="space">{{flower.space}}</p>
-                    <button>Add</button>
-                    <button>Remove</button>
+                    <h3 v-if="Flower.Name" class="name">{{Flower.Name}}</h3>
+                    <p v-if="Flower.Season" class="season">{{Flower.Season}}</p>
+                    <p v-if="Flower.Space" class="space">{{Flower.Space}}</p>
+                    <button @click="addFlower()">Add</button>
+                    <button @click="removeFlower()">Remove</button>
                 </div>
         </div>
     `
@@ -39,19 +45,19 @@ Vue.component('flowerList', {
        switch(this.collection){
            case 'all':
                return {
-                   flowers: db.collection('flowers').orderBy('name'),
+                   flowers: db.collection('Flowers').orderBy('name'),
                };
            case 'spring':
                return {
-                   flowers: db.collection('flowers').where('season', '==', 'spring'),
+                   flowers: db.collection('Flowers').where('Season', '==', 'Spring'),
                };
            case 'summer':
                return{
-                   flowers: db.collection('flowers').where('season', '==', 'summer'),
+                   flowers: db.collection('Flowers').where('Season', '==', 'Summer'),
                };
            case 'fall':
                return{
-                 flowers: db.collection('flowers').where('season', '==', 'fall'),
+                 flowers: db.collection('Flowers').where('Season', '==', 'Fall'),
                };
        }
    },
@@ -63,7 +69,7 @@ Vue.component('flowerList', {
     },
     template: `
         <div class="flower-list">
-            <flower v-if="flowers" v-for="flower in flowers" :key="flower.id"></flower>
+            <flower v-if="flowers" v-for="flower in flowers" :Flower="flower" :key="flower.id"></flower>
         </div>
     `
 });
@@ -122,11 +128,11 @@ Vue.component('garden',{
        }
    },
    methods: {
-       addFlower(){
-
+       addFlower(flower){
+         flowers.append(flower);
        },
-       removeFlower(){
-
+       removeFlower(flower){
+           flowers.remove(flower);
        }
    }
 });
