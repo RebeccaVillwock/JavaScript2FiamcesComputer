@@ -25,6 +25,13 @@ var Flower = function(){
       space: 0,
   }
 };
+var Garden = function(){
+    return {
+        size: '',
+        flowers: [],
+        createdBy: null,
+    }
+}
 
 var firebaseConfig = {
     apiKey: "AIzaSyCEmcgC1tPF-H0FnMYzt2A4H2wx-NWGoHg",

@@ -6,6 +6,7 @@ const router = new VueRouter({
        {name: 'home', path: '/home', component: HomePage},
        {name: 'achievements', path: '/achievements', component: AchievementPage},
        {name: 'edit', path: '/edit', component: EditGardenPage},
+       {name: 'listallflowers', path: '/all-flowers', component: ListAllFlowersPage},
        {name: 'login', path: '/login', component: LoginPage},
        {name: 'createaccount', path: '/create-account', component: CreateAccountPage},
    ],

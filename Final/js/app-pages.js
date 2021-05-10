@@ -1,20 +1,27 @@
 const HomePage = Vue.component('HomePage', {
     props:{
         authUser: {required: true},
+        garden: {required: true},
     },
     computed: {
         loggedIn() {
             return (this.authUser && this.authUser.uid)
-        }
+        },
     },
     methods: {
 
     },
     template: `
         <div class="home page">
-            <div v-if="loggedIn"></div>
-            <div>
-                <p>Home Page</p>
+            <div v-if="loggedIn">
+                <h2>{{authUser.displayName}}'s Garden</h2>
+                
+            </div>
+            <div v-else>
+                <h2>Get Your Garden Started Today</h2>
+                <div>
+                    <img src="images/large-garden-full.jpg" alt="large garden image">
+                </div>
             </div>
         </div>
     `,
@@ -35,13 +42,73 @@ const AchievementPage = Vue.component('AchievementPage',{
 
 const EditGardenPage = Vue.component('EditGardenPage', {
    props:{
+       authUser: {required: true},
 
    },
+    data: function(){
+      return {
+          editGarden: new Garden(),
+      };
+    },
+    computed: {
+      loggedIn() {
+          return (this.authUser && this.authUser.uid);
+      },
+    },
+    methods: {
+        login() {
+            let provider = new firebase.auth.GoogleAuthProvider();
+
+            //login with google
+            firebase.auth()
+                //.signInWithEmailAndPassword(email, password)
+                .signInWithPopup(provider)
+                .catch(function (error) {
+                    // Handle Errors here.
+                    let errorCode = error.code;
+                    let errorMessage = error.message;
+
+                    //TODO Let user know
+                });
+        },
+      addGarden(){
+          let theGarden = this.editGarden;
+
+          theGarden.createdBy = this.authUser;
+
+          db.collection('garden')
+              .add(theGarden)
+              .then(function(docRef){
+                  console.log("document written:", docRef);
+
+                  theGarden = new Garden();
+
+                  router.push({name: 'garden', params: {id: docRef.id} })
+              })
+              .catch(function(error){
+                 console.error("Error adding document: ", error);
+              });
+      }
+    },
    template: `
         <div class="edit page">
-            <div>
-                <p>Edit Garden Page</p>
+            <h2>Edit Garden</h2>
+            <b-form v-if="loggedIn" @submit.prevent="addGarden">
+                <b-form-group label="Size" label-for="size" class="col-md-6">
+                    <b-form-input id="size" v-model="editGarden.size" type="number" required></b-form-input>
+                </b-form-group>
+                
+                <b-form-group label="Season" lable-for="season" class="col-md-6">
+                    <b-form-input id="season" v-model="editGarden.season"></b-form-input>
+                </b-form-group>
+                
+                <b-button type="submit" varient="secondary">Submit</b-button>
+            </b-form>
+            <div v-else>
+                <p class="text-warning">Please Login to see this page</p>
+                <a class="text-body" href="#" @click.prevent="login">Login</a>
             </div>
+            
         </div>
     `,
 });
@@ -97,6 +164,30 @@ const CreateAccountPage = Vue.component("CreateAccountPage", {
         <div class="create-account page">
             <div>
                 <p>Create Account Page</p>
+            </div>
+        </div>
+    `,
+});
+const ListAllFlowersPage = Vue.component("ListAllFlowersPage", {
+   props: {
+
+   },
+    template: `
+        <div class="list-all-flowers page">
+            <h2>All Flowers</h2>
+            <div class="row">
+                <div class="col-md-4 col-sm-12">
+                    <h3>Spring</h3>
+                    <flower-list collection="spring"></flower-list>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <h3>Summer</h3>
+                    <flower-list collection="summer"></flower-list>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <h3>Fall</h3>
+                    <flower-list collection="fall"></flower-list>
+                </div>
             </div>
         </div>
     `,

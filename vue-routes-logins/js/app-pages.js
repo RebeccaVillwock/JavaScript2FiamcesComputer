@@ -77,7 +77,7 @@ const CreatePotluckPage = Vue.component('CreatePotluckPage', {
             delete thePotluck.time;
 
             // set author
-            thePotluck.createdBy = this.authUser;
+            thePotluck.createdBy = this.austhUser;
 
             // add user
             thePotluck.users.push(this.authUser.uid);
