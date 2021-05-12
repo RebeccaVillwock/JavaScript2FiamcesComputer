@@ -1,16 +1,24 @@
 Vue.component('flower', {
    props: {
        Flower: {type: Object, required: true},
+       authUser: {type: Object},
    } ,
     date: {
 
     },
+    firestore: function(){
+        return {
+            garden: db.collection('garden').where('createdBy.email', '==', this.authUser.email),
+        };
+    },
     computed: {
-
+        loggedIn() {
+            return (this.authUser && this.authUser.uid);
+        }
     },
     methods: {
        addFlower(){
-
+           db.collection('garden').doc(this.garden[0].id).update({flowers: firebase.firestore.FieldValue.arrayUnion(this.Flower)});
        },
         removeFlower(){
 
@@ -19,14 +27,15 @@ Vue.component('flower', {
     },
     template: `
         <div class="flower">
-            
+            <div class="card">
                 <div class="col-6">
-                    <h3 v-if="Flower.Name" class="name">{{Flower.Name}}</h3>
-                    <p v-if="Flower.Season" class="season">{{Flower.Season}}</p>
-                    <p v-if="Flower.Space" class="space">{{Flower.Space}}</p>
-                    <button @click="addFlower()">Add</button>
-                    <button @click="removeFlower()">Remove</button>
+                <div class="card-header" v-if="Flower.Name" class="name"><strong>{{Flower.Name}}</strong></div>
+                    <p v-if="Flower.Season" class="season">Blooms In: {{Flower.Season}}</p>
+                    <p v-if="Flower.Space" class="space">Space Needed: {{Flower.Space}} in</p>
+                    <button class="btn-secondary" @click="addFlower()">Add</button>
+                    <button class="btn-secondary" @click="removeFlower()">Remove</button>
                 </div>
+            </div>
         </div>
     `
 });
@@ -34,7 +43,8 @@ Vue.component('flower', {
 Vue.component('flowerList', {
    props: {
        collection: {type: String},
-       user: {type: Object}
+       user: {type: Object},
+       authUser: {type: Object},
    },
    data: function(){
        return {
@@ -45,7 +55,7 @@ Vue.component('flowerList', {
        switch(this.collection){
            case 'all':
                return {
-                   flowers: db.collection('Flowers').orderBy('name'),
+                   flowers: db.collection('Flowers'),
                };
            case 'spring':
                return {
@@ -69,7 +79,7 @@ Vue.component('flowerList', {
     },
     template: `
         <div class="flower-list">
-            <flower v-if="flowers" v-for="flower in flowers" :Flower="flower" :key="flower.id"></flower>
+            <flower v-if="flowers" v-for="flower in flowers" :Flower="flower" :auth-user="authUser" :key="flower.id"></flower>
         </div>
     `
 });
@@ -108,31 +118,57 @@ Vue.component('navigation', {
 });
 Vue.component('garden',{
    props: {
-       flower: {type: Object, required: true},
        authUser: {required: true},
    },
-   data: function(){
-       return{
-           flowers: [],
-           size: ''
-       };
-   },
-   firestore: function(){
-       return{
-           flowers: db.collection('flowers').doc(this.garden.id).collection('flowers').orderBy('name'),
-       };
-   },
+    data: function(){
+        return {
+            garden: [],
+            flowers: [],
+        };
+    },
+    firestore: function(){
+        return {
+            garden: db.collection('garden').where('createdBy.email', '==', this.authUser.email),
+        };
+    },
    computed: {
        loggedIn() {
            return (this.authUser && this.authUser.uid);
        }
    },
    methods: {
-       addFlower(flower){
-         flowers.append(flower);
+       addFlower(theFlower){
+           //garden.flowers.add(flower);
+           db.collection('garden').where('createdBy.email', '==', this.authUser.email).collection('flowers')
+               .add(theFlower)
+               .then(function(){
+                   console.log("Flower Added To Garden List");
+               })
        },
        removeFlower(flower){
-           flowers.remove(flower);
+
        }
-   }
+   },
+   template: `
+    <div class="row">
+        <div class="col-md-8">
+            <div v-if="garden[0].size < 10">
+                <img src="images/small-garden-full.jpg" alt="small garden" height="450" width="500">   
+            </div>
+            <div v-else-if="garden[0].size < 20">
+                <img src="images/medium-garden-full.jpg" alt="medium garden" height="450" width="500">   
+            </div>
+            <div v-else-if="garden[0].size > 20">
+                <img src="images/large-garden-full.jpg" alt="large garden image" height="450" width="500">
+            </div>
+            <div v-else>
+                Time To get Started!!
+            </div>
+        </div>
+        <div class="col-md-4">
+            <flower v-if="flowers" v-for="flower in flowers" :key="flower.id" :Flower="flower" :auth-user="authUser"></flower>
+        </div>
+    </div>
+   `,
+
 });

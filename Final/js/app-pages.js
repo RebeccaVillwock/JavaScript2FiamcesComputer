@@ -1,12 +1,15 @@
 const HomePage = Vue.component('HomePage', {
     props:{
         authUser: {required: true},
-        garden: {required: true},
     },
+
     computed: {
         loggedIn() {
             return (this.authUser && this.authUser.uid)
         },
+        gardenSize(){
+            return this.garden[0].size
+        }
     },
     methods: {
 
@@ -15,12 +18,19 @@ const HomePage = Vue.component('HomePage', {
         <div class="home page">
             <div v-if="loggedIn">
                 <h2>{{authUser.displayName}}'s Garden</h2>
-                
+                <garden :auth-user="authUser"></garden>
             </div>
             <div v-else>
                 <h2>Get Your Garden Started Today</h2>
-                <div>
-                    <img src="images/large-garden-full.jpg" alt="large garden image">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="images/large-garden-full.jpg" alt="large garden image" height="450">
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <h4>Flowers</h4>
+                        <flower-list collection="all" :auth-user="authUser"></flower-list>
+                    </div>
                 </div>
             </div>
         </div>
@@ -29,12 +39,22 @@ const HomePage = Vue.component('HomePage', {
 
 const AchievementPage = Vue.component('AchievementPage',{
     props:{
-
+        authUser: {required: true},
     },
+    computed: {
+        loggedIn() {
+            return (this.authUser && this.authUser.uid);
+        },
+    },
+
     template: `
         <div class="achievement page">
-            <div>
-                <p>Achievement Page</p>
+            <h2>Achievements</h2>
+            <div v-if="loggedIn">
+                <p>Coming Soon</p>
+            </div>
+            <div v-else>
+                <p class="text-warning">Please Login to see this page</p>
             </div>
         </div>
     `,
@@ -67,8 +87,6 @@ const EditGardenPage = Vue.component('EditGardenPage', {
                     // Handle Errors here.
                     let errorCode = error.code;
                     let errorMessage = error.message;
-
-                    //TODO Let user know
                 });
         },
       addGarden(){
@@ -170,8 +188,13 @@ const CreateAccountPage = Vue.component("CreateAccountPage", {
 });
 const ListAllFlowersPage = Vue.component("ListAllFlowersPage", {
    props: {
-
+       authUser: {required: true}
    },
+    computed: {
+        loggedIn() {
+            return (this.authUser && this.authUser.uid);
+        },
+    },
     methods: {
 
     },
@@ -181,15 +204,15 @@ const ListAllFlowersPage = Vue.component("ListAllFlowersPage", {
             <div class="row">
                 <div class="col-md-4 col-sm-12">
                     <h3>Spring</h3>
-                    <flower-list collection="spring"></flower-list>
+                    <flower-list collection="spring" v-if="loggedIn" :auth-user="authUser"></flower-list>
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <h3>Summer</h3>
-                    <flower-list collection="summer"></flower-list>
+                    <flower-list collection="summer" v-if="loggedIn" :auth-user="authUser"></flower-list>
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <h3>Fall</h3>
-                    <flower-list collection="fall"></flower-list>
+                    <flower-list collection="fall" v-if="loggedIn" :auth-user="authUser"></flower-list>
                 </div>
             </div>
         </div>
