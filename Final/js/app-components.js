@@ -21,7 +21,7 @@ Vue.component('flower', {
            db.collection('garden').doc(this.garden[0].id).update({flowers: firebase.firestore.FieldValue.arrayUnion(this.Flower)});
        },
         removeFlower(){
-            db.collection('potlucks').doc(this.potluck.id).update({users: firebase.firestore.FieldValue.arrayRemove(this.Flower)});
+            db.collection('potlucks').doc(this.garden[0].id).update({users: firebase.firestore.FieldValue.arrayRemove(this.Flower)});
         }
 
     },
