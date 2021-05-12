@@ -137,17 +137,7 @@ Vue.component('garden',{
        }
    },
    methods: {
-       addFlower(theFlower){
-           //garden.flowers.add(flower);
-           db.collection('garden').where('createdBy.email', '==', this.authUser.email).collection('flowers')
-               .add(theFlower)
-               .then(function(){
-                   console.log("Flower Added To Garden List");
-               })
-       },
-       removeFlower(flower){
 
-       }
    },
    template: `
     <div class="row">
@@ -166,7 +156,7 @@ Vue.component('garden',{
             </div>
         </div>
         <div class="col-md-4">
-            <flower v-if="flowers" v-for="flower in flowers" :key="flower.id" :Flower="flower" :auth-user="authUser"></flower>
+            <flower v-if="flowers" v-for="flower in garden[0].flowers" :key="flower.id" :Flower="flower" :auth-user="authUser"></flower>
         </div>
     </div>
    `,

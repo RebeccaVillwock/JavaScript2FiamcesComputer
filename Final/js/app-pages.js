@@ -90,6 +90,7 @@ const EditGardenPage = Vue.component('EditGardenPage', {
                 });
         },
       addGarden(){
+
           let theGarden = this.editGarden;
 
           theGarden.createdBy = this.authUser;
